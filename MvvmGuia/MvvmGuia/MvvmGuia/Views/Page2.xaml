@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MvvmGuia.Views.Page2"
+             NavigationPage.HasNavigationBar="False">
+    <!-- CUSTOMIZACION DE BARRA SUPERIOR -->
+    <StackLayout>
+        <Image Source="atras.png"
+               VerticalOptions="Start" HorizontalOptions="Start" 
+               HeightRequest="25" Margin="10" 
+               >
+            <!-- seccion para utiliar las imagenes como si fueran comandos -->
+            <Image.GestureRecognizers>
+                <!-- seccion para activar comandos en elementos  -->
+                <TapGestureRecognizer Command="{Binding VolverAsyncCommand}"/>
+            </Image.GestureRecognizers>
+        </Image>
+
+
+        <CollectionView ItemsSource="{Binding ListaUsuarios}"
+                        VerticalOptions="Center"
+                        Margin="20,0,20,0"
+                        x:Name="CollectionViewUsuarios">
+            <!-- 
+            El CollectionView debe tener un nombre, que debe ser muy distinto al ItemSource 
+            utilizando la propiedad x:Name="NOMBRE"
+            esto sirve para PASAR COMO PARAMETRO AL TapGestureRecognizer en el SOURCE 
+            Source={x:Reference CollectionViewUsuarios}
+            -->
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" 
+                                 Span="1" 
+                                 VerticalItemSpacing="20"/>
+                
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <!-- DENTRO DE DATA TEMPLATE SE DEBE ESTABLECER EL LAYOUT O EL GRID  QUE SE UTILIZARA -->
+                    <Frame CornerRadius="15" BackgroundColor="Gold">
+                        <!-- EL FRAME PUEDE DAR ESA PRESENTACION DE BORDES REDONDEADOS EN VISTAS -->
+                       
+                        <StackLayout Orientation="Horizontal">
+                            <Image Source="{ Binding Imagen }" 
+                                   HeightRequest="100" />
+                            <Label Text="{ Binding Nombre }" 
+                                   VerticalOptions="Center" 
+                                   FontSize="20" 
+                                   FontAttributes="Bold" />
+                        </StackLayout>
+                        <!-- 
+                        GestureRecognizer de un elemento, o sea Frame captura la accion de tocar el frame 
+                        Frame.GestureRecognizers
+                        -->
+                        <Frame.GestureRecognizers>
+                            <!-- 
+                            Accion de Tap para activar el GestureRecognizer que ejecuta el comando 
+                            TapGestureRecognizer
+                            el comando que forma parte de este listado debe tener la consideracion de la propiedad Path
+                            en el Binding y especificando OBLIGATORIAMENTE BindingContext.MyCommand y colocando como referencia de parametro 
+                            el nombre de mi CollectionView que se declara mas arriba
+                            Command="{Binding Path=BindingContext.AlertaCommand, Source={x:Reference CollectionViewUsuarios}}"
+                            Envio de parametros hacia los comandos debe ser con CommandParameter con un . 
+                            para saber que son todos los datos de la fila
+                            CommandParameter="{Binding .}"
+                            -->
+                            <TapGestureRecognizer 
+                                Command="{Binding Path=BindingContext.AlertaCommand, 
+                                                  Source={x:Reference CollectionViewUsuarios}}"
+                                CommandParameter="{Binding .}"/>
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                    
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+</ContentPage>

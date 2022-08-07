@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MvvmGuia.Views.Page1"
+             NavigationPage.HasNavigationBar="False">
+
+    <Grid BackgroundColor="#464FBC">
+        <Image Source="atras.png"
+               VerticalOptions="Start" HorizontalOptions="Start" 
+               HeightRequest="25" Margin="10" 
+               >
+            <!-- seccion para utiliar las imagenes como si fueran comandos -->
+            <Image.GestureRecognizers>
+                <!-- seccion para activar comandos en elementos  -->
+                <TapGestureRecognizer Command="{Binding VolverAsyncCommand}"/>
+            </Image.GestureRecognizers>
+        </Image>
+        <StackLayout VerticalOptions="Center">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Label  Text="Mensaje" 
+                        TextColor="White"
+                        FontAttributes="Bold" 
+                        VerticalOptions="Center"/>
+                <Entry Placeholder="Escriba Su Mensaje" 
+                       PlaceholderColor="White"
+                       HorizontalOptions="StartAndExpand"
+                       Text="{Binding Mensaje}"
+                       TextColor="White"/>
+            </StackLayout>
+
+            <Button Text="Ejecutar" 
+                TextTransform="None"
+                HorizontalOptions="Center" 
+                VerticalOptions="Center" 
+                BackgroundColor="White"
+                FontAttributes="Bold"
+                CornerRadius="5"
+                Command="{Binding AlertAsyncCommand}"  />
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Label  Text="Ingrese un Numero" 
+                        TextColor="White"
+                        FontAttributes="Bold" 
+                        VerticalOptions="Center"/>
+                <Entry Placeholder="Numero 1" 
+                       PlaceholderColor="White"
+                       HorizontalOptions="StartAndExpand"
+                       Text="{Binding Numero1}"
+                       TextColor="White"
+                       Keyboard="Numeric"/>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Label  Text="Ingrese otro Numero" 
+                        TextColor="White"
+                        FontAttributes="Bold" 
+                        VerticalOptions="Center"/>
+                <Entry Placeholder="Numero 2" 
+                       PlaceholderColor="White"
+                       HorizontalOptions="StartAndExpand"
+                       Text="{Binding Numero2}"
+                       TextColor="White"
+                       Keyboard="Numeric"/>
+            </StackLayout>
+
+            <Button Text="Sumar" 
+                TextTransform="None"
+                HorizontalOptions="Center" 
+                VerticalOptions="Center" 
+                BackgroundColor="White"
+                FontAttributes="Bold"
+                CornerRadius="5"
+                Command="{Binding SumarCommand}"  />
+
+            <Label  Text="{Binding Resultado}" 
+                        TextColor="White"
+                        IsVisible="{Binding Visible}"
+                        FontAttributes="Bold" 
+                        HorizontalOptions="Center"
+                        FontSize="40"
+                        VerticalOptions="Center"/>
+
+
+            <Button Text="Navegar a Pagina 2" 
+                TextTransform="None"
+                HorizontalOptions="Center" 
+                VerticalOptions="Center" 
+                BackgroundColor="White"
+                FontAttributes="Bold"
+                CornerRadius="5"
+                Command="{Binding NavegacionAsyncCommand}"  />
+
+            <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                <Label TextColor="White" FontAttributes="Bold" Text="Picker:" VerticalOptions="Center"/>
+                <!-- este elemento funciona como un modal combobox -->
+                <Picker TextColor="White" TitleColor="White"  
+                        HorizontalOptions="CenterAndExpand" 
+                        Title="Seleccione un elemento"
+                        SelectedItem="{Binding TipoSeleccionado}">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}" >
+                            <x:String>Administrador</x:String>
+                            <x:String>Empleado</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+            </StackLayout>
+            <StackLayout HorizontalOptions="Center">
+                <DatePicker TextColor="White" Date="{Binding Fecha, Mode=TwoWay}">
+                    <DatePicker.Format>dd/MM/yyyy</DatePicker.Format>
+                </DatePicker>
+                <Label Text="{Binding ResultadoFecha}" 
+                       TextColor="White" 
+                       FontAttributes="Bold" 
+                       FontSize="20" />
+            </StackLayout>
+
+        </StackLayout>
+
+
+    </Grid>
+</ContentPage>
